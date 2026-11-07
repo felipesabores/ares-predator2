@@ -43,9 +43,7 @@ Sistema de BI para a transportadora **Acerta Express**, extraindo dados do TMS *
 
 ### API (tela 669)
 - Endpoint login: `POST https://acertaexpress.brudam.com.br/api/v1/acesso/auth/login`
-- Usuário API: `2d8ef5476fab725a5bf9271b474046ff`
-- Senha API: `0511ed411169dc642a423b3f272ca82359c5146150b0d064752dcff0a5218fd9`
-- Token: `7ea3bb473fe7519c43dc64552492e62c252cffcce43ca41b04`
+- Usuário, senha e token da API: fora do git (variáveis BRUDAM_API_USER, BRUDAM_API_PASS, BRUDAM_API_TOKEN no .env)
 - **Obs:** API tem endpoints limitados (tracking, CTe, faturas). Os relatórios do BI são via web scraping.
 
 ### Relatórios mapeados
