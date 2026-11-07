@@ -30,6 +30,27 @@ Pipeline de BI da **Acerta Express** — extrai dados operacionais do TMS Brudam
 | Grafana | **https://grafana.acertaexpress.app** |
 
 
+## Painel Predator (controle pelo ares-web2)
+
+Desde a v2 do controle, **quais relatórios rodam e de quanto em quanto tempo é decidido no painel `/predator` do ares-web2**, não no código nem no cron.
+
+- O `sync.py` lê `predator_jobs_status` no banco, roda só os relatórios vencidos e grava cada execução em `predator_execucoes`.
+- Desligar, pausar, mudar intervalo ou pedir "rodar agora" no painel vale no próximo minuto.
+- Se as tabelas `predator_*` não existirem (migration `ares-web2/db/migrations/001_predator_control.sql` não aplicada), o sync roda no modo antigo: todos os relatórios.
+- Contrato completo: `ares-web2/docs/predator2.md`.
+
+**Cron recomendado** (`/etc/cron.d/ares-predator2` na LXC), substituindo as linhas de 15 min / 90 min:
+
+```cron
+* * * * * root /opt/ares-predator2/run-sync.sh >> /opt/ares-predator2/cron.log 2>&1
+```
+
+Quando nada está vencido o `sync.py` sai em menos de 1 segundo (código 75) sem abrir o navegador e sem notificar no Ntfy. Um `flock` em `data/sync.lock` impede dois syncs ao mesmo tempo.
+
+### Credenciais
+
+Nenhuma senha fica no código. Copie `.env.example` para `.env` na raiz (`chmod 600 .env`) e preencha `BRUDAM_USER`, `BRUDAM_PASS`, `DB_*` e `NTFY_AUTH`. Os scripts Python leem via `src/settings.py`; os `.sh` leem `NTFY_AUTH` do mesmo arquivo.
+
 ## Como funciona
 
 ```
