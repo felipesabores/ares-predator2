@@ -1,0 +1,16 @@
+brudam_*.json
+brudam_*.html
+brudam_*.js
+brudam_*.txt
+__pycache__/
+*.pyc
+.env
+
+data/
+debug/
+sync.log
+debug_*.py
+
+# Smoke tests — logs locais rotativos
+.smoke-logs/
+.DS_Store
